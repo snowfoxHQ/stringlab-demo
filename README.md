@@ -20,15 +20,17 @@ top_words("b a b c b a", 2)         # [("b", 3), ("a", 2)]
 
 ## Tests
 
-Two suites, same library:
+Two suites, same library, deliberately separate:
 
 ```bash
 python -m unittest discover -s tests -t . -v   # 19 tests, stdlib only
-python -m pytest tests/ -q                     # 40 tests, needs pytest
+python -m pytest -q                            # 40 tests, needs pytest
 ```
 
-The unittest suite is the zero-dependency baseline; the pytest suite is
-pytest-native (plain functions + parametrize) and covers the same modules.
+`tests/` is the zero-dependency unittest baseline and must stay importable
+without pytest. `tests_pytest/` holds the pytest-native suite (plain
+functions + parametrize); pytest discovers both directories, unittest
+never sees the second one.
 
 If your harness writes suite logs, name each one `test-<framework>.log`
 (for example `test-unittest.log`, `test-pytest.log`) - the host-side gate
