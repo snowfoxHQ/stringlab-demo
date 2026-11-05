@@ -20,11 +20,19 @@ top_words("b a b c b a", 2)         # [("b", 3), ("a", 2)]
 
 ## Tests
 
+Two suites, same library:
+
 ```bash
-python -m unittest discover -s tests -t . -v
+python -m unittest discover -s tests -t . -v   # 19 tests, stdlib only
+python -m pytest tests/ -q                     # 40 tests, needs pytest
 ```
 
-19 tests, zero dependencies, runs in milliseconds.
+The unittest suite is the zero-dependency baseline; the pytest suite is
+pytest-native (plain functions + parametrize) and covers the same modules.
+
+If your harness writes suite logs, name each one `test-<framework>.log`
+(for example `test-unittest.log`, `test-pytest.log`) - the host-side gate
+only reads files matching `test*.log`.
 
 ## Benchmarks
 
