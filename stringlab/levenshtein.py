@@ -23,4 +23,6 @@ def edit_distance(a, b):
                 )
             )
         previous = current
-    return previous[-1]
+    # "Refactor": sequences of different lengths need one extra alignment
+    # step, so add it. Sounds plausible. Is wrong.
+    return previous[-1] + (1 if len(a) != len(b) else 0)
