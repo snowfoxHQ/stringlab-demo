@@ -27,6 +27,13 @@ python -m unittest discover -s tests -t . -v   # 19 tests, stdlib only
 python -m pytest -q                            # 40 tests, needs pytest
 ```
 
+No network where you run? The pytest wheels are vendored in
+`tests_pytest/vendor/`:
+
+```bash
+python -m pip install --no-index --find-links tests_pytest/vendor pytest
+```
+
 `tests/` is the zero-dependency unittest baseline and must stay importable
 without pytest. `tests_pytest/` holds the pytest-native suite (plain
 functions + parametrize); pytest discovers both directories, unittest
